@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/board")
@@ -25,7 +26,7 @@ public class BoardController {
     }
 
     @PostMapping("/writepro")
-    public String boardWritePro(Board board, Model model, HttpServletRequest request) {
+    public String boardWritePro(Board board, Model model, HttpServletRequest request, MultipartFile file) throws Exception {
 
         if (request.getParameter( "title" ) == "") {
             model.addAttribute( "message", "제목이 입력되지 않아 글을 등록할 수 없습니다." );
@@ -35,7 +36,7 @@ public class BoardController {
         } else {
             model.addAttribute( "message", "글 작성이 완료되었습니다." );
             model.addAttribute("searchUrl", "/board/list");
-            boardService.write(board);
+            boardService.write(board, file);
         }
 
         return "/boards/message";
@@ -67,7 +68,7 @@ public class BoardController {
     }
 
     @PostMapping("/update/{id}")
-    public String boardUpdate(@PathVariable("id") Integer id, Board board, Model model, HttpServletRequest request) {
+    public String boardUpdate(@PathVariable("id") Integer id, Board board, Model model, MultipartFile file, HttpServletRequest request) throws Exception {
 
         Board boardTemp = boardService.boardView(id);
         boardTemp.setTitle(board.getTitle());
@@ -81,7 +82,7 @@ public class BoardController {
         } else {
             model.addAttribute( "message", "글 수정이 완료되었습니다." );
             model.addAttribute( "searchUrl", "/board/list" );
-            boardService.write( boardTemp );
+            boardService.write( boardTemp, file);
         }
 
         return "/boards/message";
