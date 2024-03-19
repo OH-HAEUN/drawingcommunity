@@ -2,6 +2,7 @@ package com.firstproject.drawingcommunity.controller;
 
 import com.firstproject.drawingcommunity.entity.Board;
 import com.firstproject.drawingcommunity.service.BoardService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +24,21 @@ public class BoardController {
         return "/boards/boardwrite";
     }
 
-    @PostMapping("/writePro")
-    public String boardWritePro(Board board) {
-        boardService.write(board);
-        return "";
+    @PostMapping("/writepro")
+    public String boardWritePro(Board board, Model model, HttpServletRequest request) {
+
+        if (request.getParameter( "title" ) == "") {
+            model.addAttribute( "message", "제목이 입력되지 않아 글을 등록할 수 없습니다." );
+        } else if (request.getParameter( "content" ) == "") {
+            model.addAttribute( "message", "내용이 입력되지 않아 글을 등록할 수 없습니다." );
+
+        } else {
+            model.addAttribute( "message", "글 작성이 완료되었습니다." );
+            model.addAttribute("searchUrl", "/board/list");
+            boardService.write(board);
+        }
+
+        return "/boards/message";
     }
 
     @GetMapping("/list")
@@ -55,14 +67,23 @@ public class BoardController {
     }
 
     @PostMapping("/update/{id}")
-    public String boardUpdate(@PathVariable("id") Integer id, Board board) {
+    public String boardUpdate(@PathVariable("id") Integer id, Board board, Model model, HttpServletRequest request) {
 
         Board boardTemp = boardService.boardView(id);
         boardTemp.setTitle(board.getTitle());
         boardTemp.setContent(board.getContent());
 
-        boardService.write(boardTemp);
+        if (request.getParameter( "title" ) == "") {
+            model.addAttribute( "message", "제목이 입력되지 않아 글을 수정할 수 없습니다." );
+        } else if (request.getParameter( "content" ) == "") {
+            model.addAttribute( "message", "내용이 입력되지 않아 글을 수정할 수 없습니다." );
 
-        return "redirect:/board/list";
+        } else {
+            model.addAttribute( "message", "글 수정이 완료되었습니다." );
+            model.addAttribute( "searchUrl", "/board/list" );
+            boardService.write( boardTemp );
+        }
+
+        return "/boards/message";
     }
 }
