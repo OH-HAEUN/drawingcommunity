@@ -24,7 +24,7 @@ public class BoardController {
     private BoardService boardService;
 
     @GetMapping("/write")
-    public String boardwrite() {
+    public String boardWrite() {
 
         return "/boards/boardwrite";
     }
@@ -47,9 +47,17 @@ public class BoardController {
     }
 
     @GetMapping("/list")
-    public String boardlist(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+    public String boardList(Model model,
+                            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                            String searchKeyword) {
 
-        Page<Board> list = boardService.boardList(pageable);
+        Page<Board> list = null;
+
+        if (searchKeyword == null) {
+            list = boardService.boardList(pageable);
+        } else {
+            list = boardService.boardSearchList(searchKeyword, pageable);
+        }
 
         int nowPage = list.getPageable().getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);
