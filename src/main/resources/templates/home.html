@@ -30,6 +30,19 @@
         object-fit: cover;
     }
 
+    a {
+        color: black;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: lightcoral;
+    }
+
+    .table-hover > tbody > tr:hover {
+        background-color: rgb(221, 255, 244, 0.7);
+    }
+
 </style>
 
 <header>
@@ -71,6 +84,14 @@
     </div>
     <div class="col-sm-6">
         <h4>자유게시판</h4>
+        <div class="layout">
+            <table class="table table-hover">
+                <tbody>
+                <tr th:each="board : ${list}">
+                    <td><a th:text="${board.title}" th:href="@{/board/view(id=${board.id})}"></a></td>
+                </tr>
+                </tbody>
+            </table>
     </div>
 </div>
 </body>
