@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>동 그 래</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<style>
+
+    header {
+        width: 100%;
+        padding: 20px;
+        text-align: center;
+    }
+
+    body {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    nav {
+        margin-bottom: 20px;
+    }
+
+    .img-thumbnail {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+    }
+
+</style>
+
+<header>
+    <h1>동 그 래</h1>
+    <h4>동네에서 그림 그릴래</h4>
+</header>
+<body>
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <div class="col-sm-4"></div>
+        <div class="navbar-collapse col-sm-4 justify-content-center">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="#">그림공유</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">자유게시판</a></li>
+            </ul>
+        </div>
+        <div id="info" class="col-sm-4">
+            <ul class="navbar-nav justify-content-end">
+                <li class="nav-item"><a class="nav-link" href="#">마이페이지</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">로그인</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div id="board" class="row">
+    <div class="col-sm-6">
+        <h4>그림공유</h4>
+        <div class="row">
+            <div class="col-lg-4">
+                <img src="#" class="rounded img-thumbnail">
+            </div>
+            <div class="col-lg-4">
+                <img src="#" class="rounded img-thumbnail">
+            </div>
+            <div class="col-lg-4">
+                <img src="#" class="rounded img-thumbnail">
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <h4>자유게시판</h4>
+    </div>
+</div>
+</body>
+</html>
