@@ -43,7 +43,7 @@ public class BoardController {
             boardService.write(board, file);
         }
 
-        return "/boards/message";
+        return "/message";
     }
 
     @GetMapping("/list")
