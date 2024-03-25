@@ -25,7 +25,22 @@ public class UserController {
         String password = request.getParameter("password");
         model.addAttribute("message", "회원가입 되었습니다.");
         model.addAttribute("searchUrl", "/");
-        userService.user(user, password);
+        userService.signup(user, password);
         return "/message";
     }
+
+    @GetMapping("/login")
+    public String login(){
+        return  "/users/login";
+    }
+
+//    @PostMapping("/login")
+//    public String loginPro(User user, HttpServletRequest request){
+//        String password = request.getParameter("password");
+//        if(userService.login(user, password)){
+//            System.out.println("됨?");
+//            return "redirect:/";
+//        }
+//        return "/users/login";
+//    }
 }
