@@ -26,6 +26,9 @@ public class UserController {
         return "/users/signup";
     }
 
+//    @GetMapping("/usernameSameCheck")
+//    public
+
     @PostMapping("/signuppro")
     public String signupPro(User user, Model model, HttpServletRequest request) {
         String password = request.getParameter("password");

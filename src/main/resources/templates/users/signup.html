@@ -24,6 +24,30 @@
         margin: 20px;
     }
 </style>
+
+<script>
+    function usernameCheck() {
+        var username = document.getElementById('username').value
+        var usernameRegEx = /^[a-zA-z][a-zA-Z0-9]{4,12}$/;
+        console.log("찍힘?");
+        console.log(username);
+        if (username == "") {
+            alert("아이디를 입력하세요.")
+            return;
+        }
+        else if(!usernameRegEx.test(username)) {
+            alert("아이디는 4~10글자 사이에 영어와 숫자 조합이어야 합니다.")
+            return;
+        }
+        // else if(){
+        //     alert("중복된 아이디 입니다.")
+        // }
+        else {
+            alert("사용 가능한 아이디 입니다.")
+        }
+    }
+</script>
+
 <body>
 <div class="container">
     <h2>회원가입</h2>
@@ -34,7 +58,7 @@
                 <input type="text" class="form-control" name="username" id="username" placeholder="아이디를 입력하세요.">
             </div>
             <div class="col-sm-2">
-                <button class="btn btn-primary">중복확인</button>
+                <button type="button" class="btn btn-primary" onclick="usernameCheck()">중복확인</button>
             </div>
         </div>
         <div class="form-group row d-flex justify-content-center">
@@ -43,7 +67,7 @@
                 <input type="text" class="form-control" name="nickname" id="nickname" placeholder="닉네임을 입력하세요.">
             </div>
             <div class="col-sm-2">
-                <button class="btn btn-primary">중복확인</button>
+                <button type="button" class="btn btn-primary">중복확인</button>
             </div>
         </div>
         <div class="form-group row d-flex justify-content-center">
