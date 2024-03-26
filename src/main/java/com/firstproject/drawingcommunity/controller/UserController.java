@@ -56,19 +56,13 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login(){
+    public String login(Model model, @RequestParam(value="exception", required = false) String exception){
+        System.out.println(exception);
+        if (exception != null) {
+            model.addAttribute( "exception", exception );
+        };
         return  "/users/login";
     }
-
-//    @PostMapping("/login")
-//    public String loginPro(User user, HttpServletRequest request){
-//        String password = request.getParameter("password");
-//        if(userService.login(user, password)){
-//            System.out.println("됨?");
-//            return "redirect:/";
-//        }
-//        return "/users/login";
-//    }
 
     @GetMapping("/mypage")
     public String mypage(Model model, Principal principal) {

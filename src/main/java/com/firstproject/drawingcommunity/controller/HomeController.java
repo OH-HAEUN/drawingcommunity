@@ -2,6 +2,7 @@ package com.firstproject.drawingcommunity.controller;
 
 import com.firstproject.drawingcommunity.entity.User;
 import com.firstproject.drawingcommunity.service.HomeService;
+import com.firstproject.drawingcommunity.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -18,14 +19,20 @@ public class HomeController {
 
     @Autowired
     private HomeService homeService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("/")
     public String home(Model model, @PageableDefault(page = 0, size = 15, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                        Principal principal) {
+
         model.addAttribute("list", homeService.homeFreeBoard(pageable));
 
         if (principal != null) {
-            model.addAttribute( "loginuser", principal.getName() );
+            String loginuser = principal.getName();
+            User user = userService.userInfo(loginuser);
+
+            model.addAttribute( "loginuser", user.getNickname());
         };
 
         return "home";
