@@ -52,4 +52,12 @@ public class UserService {
     public User userInfo(String username) {
         return userRepository.findByUsername(username);
     }
+
+    public boolean userIdCheck(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    public boolean userNicknameCheck(String nickname) {
+        return userRepository.existsByNickname(nickname);
+    }
 }

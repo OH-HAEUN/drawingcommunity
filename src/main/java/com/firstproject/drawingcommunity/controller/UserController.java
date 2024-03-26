@@ -3,16 +3,13 @@ package com.firstproject.drawingcommunity.controller;
 import com.firstproject.drawingcommunity.entity.User;
 import com.firstproject.drawingcommunity.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Member;
 import java.security.Principal;
 
 @Controller
@@ -28,6 +25,26 @@ public class UserController {
 
 //    @GetMapping("/usernameSameCheck")
 //    public
+
+    @GetMapping("/idcheck")
+    public ResponseEntity<String> idCheck(@RequestParam("username") String username) throws BadRequestException {
+        System.out.println(username);
+        if (userService.userIdCheck(username) == true) {
+            throw new BadRequestException("이미 사용중인 아이디 입니다.");
+        } else {
+            return ResponseEntity.ok( "사용 가능한 아이디 입니다." );
+        }
+    }
+
+    @GetMapping("/nicknamecheck")
+    public ResponseEntity<String> nicknameCheck(@RequestParam("nickname") String nickname) throws BadRequestException {
+        System.out.println(nickname);
+        if (userService.userNicknameCheck(nickname) == true) {
+            throw new BadRequestException("이미 사용중인 닉네임 입니다.");
+        } else {
+            return ResponseEntity.ok( "사용 가능한 닉네임 입니다." );
+        }
+    }
 
     @PostMapping("/signuppro")
     public String signupPro(User user, Model model, HttpServletRequest request) {
