@@ -2,6 +2,7 @@ package com.firstproject.drawingcommunity.service;
 
 import com.firstproject.drawingcommunity.entity.Board;
 import com.firstproject.drawingcommunity.repository.BoardRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,43 +20,53 @@ public class BoardService {
     private BoardRepository boardRepository;
 
     // 게시글 작성 처리
-    public void write(Board board, MultipartFile file) throws Exception {
+    public void write(Board board, MultipartFile file, String writer) throws Exception {
 
-        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+        String projectPath = System.getProperty( "user.dir" ) + "\\src\\main\\resources\\static\\files";
 
         UUID uuid = UUID.randomUUID();
 
-        String fileName = uuid + "_" + file.getOriginalFilename();
+        if (file != null) {
+            if (file.getOriginalFilename() != "") {
+                String fileName = uuid + "_" + file.getOriginalFilename();
 
-        File saveFile = new File(projectPath, fileName);
+                File saveFile = new File( projectPath, fileName );
 
-        file.transferTo(saveFile);
+                file.transferTo( saveFile );
 
-        board.setFilename(fileName);
-        board.setFilepath("/files/" + fileName);
+                board.setFilename( fileName );
+                board.setFilepath( "/files/" + fileName );
+            }
+        }
+        board.setWriter( writer );
 
-        boardRepository.save(board);
+        boardRepository.save( board );
     }
 
     // 게시글 리스트 처리
     public Page<Board> boardList(Pageable pageable) {
 
-        return boardRepository.findAll(pageable);
+        return boardRepository.findAll( pageable );
     }
 
     public Page<Board> boardSearchList(String searchKeyword, Pageable pageable) {
-        return boardRepository.findByTitleContaining(searchKeyword, pageable);
+        return boardRepository.findByTitleContaining( searchKeyword, pageable );
     }
 
     // 특정 게시글 불러오기
     public Board boardView(Integer id) {
 
-        return boardRepository.findById(id).get();
+        return boardRepository.findById( id ).get();
+    }
+
+    @Transactional
+    public int updateView(Integer id) {
+        return boardRepository.updateView(id);
     }
 
 
     // 특정 게시글 삭제
     public void boardDelete(Integer id) {
-        boardRepository.deleteById(id);
+        boardRepository.deleteById( id );
     }
 }

@@ -1,14 +1,17 @@
 package com.firstproject.drawingcommunity.entity;
 
+import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import java.util.Date;
 
 @Entity
 @Data
+@EntityListeners(AuditingEntityListener.class)
 public class Board {
 
     @Id
@@ -22,4 +25,17 @@ public class Board {
     private String filename;
 
     private String filepath;
+
+    private String writer;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date c_date;
+
+    @LastModifiedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(insertable = false)
+    private Date m_date;
+
+    private int view;
 }

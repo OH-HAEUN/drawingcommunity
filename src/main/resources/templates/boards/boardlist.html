@@ -33,9 +33,9 @@
         <tr th:each="board : ${list}">
             <td class="text-center" th:text="${board.id}">1</td>
             <td class="text-left"><a th:text="${board.title}" th:href="@{/board/view(id=${board.id})}"></a></td>
-            <td class="text-center">김땡땡땡땡</td>
-            <td class="text-center">2000-00-00</td>
-            <td class="text-center">0</td>
+            <td class="text-center" th:text="${board.writer}"></td>
+            <td class="text-center" th:text="${#dates.format(board.c_date, 'yyyy-MM-dd')}"></td>
+            <td class="text-center" th:text="${board.view}"></td>
         </tr>
         </tbody>
     </table>
@@ -50,13 +50,15 @@
         </th:block>
         <li class="page-item"><a class="page-link" href="#">next</a></li>
     </ul>
-    <form th:action="@{/board/list}" method="get">
-        <div class="input-group mb-1">
-            <input type="text" name="searchKeyword" class="form-control" aria-describedby="button-addon">
-            <button type="submit" id="button-addon" class="btn btn-outline-secondary">검색</button>
-        </div>
-    </form>
-</div>
+    <div class="row justify-content-center align-items-center">
+        <form th:action="@{/board/list}" method="get" class="col-sm-3">
+            <div class="input-group mb-1">
+                <input type="text" name="searchKeyword" class="form-control" aria-describedby="button-addon">
+                <button type="submit" id="button-addon" class="btn btn-outline-primary">검색</button>
+            </div>
+        </form>
+    </div>
+    </div>
 
 </body>
 </html>
