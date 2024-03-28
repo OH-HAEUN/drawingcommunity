@@ -88,10 +88,12 @@ public class BoardController {
     }
 
     @GetMapping("/delete")
-    public String boardDelete(Integer id) {
+    public String boardDelete(Integer id, Model model) {
+
+        model.addAttribute("message", "삭제되었습니다.");
         boardService.boardDelete(id);
 
-        return "redirect:/board/list";
+        return "redirect:/list";
     }
 
     @GetMapping("/modify/{id}")

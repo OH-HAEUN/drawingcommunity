@@ -22,6 +22,10 @@
         color: lightcoral;
     }
 
+    #writebutton {
+        float: right;
+    }
+
 </style>
 
 <th:block th:replace="~{header :: header}"></th:block>
@@ -48,6 +52,9 @@
         </tr>
         </tbody>
     </table>
+
+    <button type="button" class="btn btn-outline-primary" id="boardlist" th:onclick="|window.location.reload()|">글목록</button>
+    <button type="button" class="btn btn-primary" id="writebutton" th:onclick="|location.href='@{/write}'|">글쓰기</button>
 
     <ul class="pagination justify-content-center">
         <li class="page-item"><a class="page-link" href="#">prev</a></li>

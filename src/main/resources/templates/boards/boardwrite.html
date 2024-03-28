@@ -9,20 +9,26 @@
 
 <style>
     .layout {
-        width : 500px;
+        width : 85%;
         margin : 0 auto;
     }
 
-    .layout input {
-        width : 100%;
-        box-sizing : border-box;
+    #title {
+        margin-bottom: 20px;
     }
 
-    .layout textarea {
+    #content {
         width : 100%;
-        margin-top: 10px;
-        min-height: 300px;
     }
+
+    .form-control {
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        margin-bottom: 10px;
+    }
+
 </style>
 
 <th:block th:replace="~{header :: header}"></th:block>
@@ -30,10 +36,10 @@
 <body>
     <div class="layout">
         <form action="/writepro" method="post" enctype="multipart/form-data">
-            <input name="title" type="text">
-            <textarea name="content"></textarea>
-            <input type="file" name="file">
-            <button type="submit">작성</button>
+            <input id="title" name="title" type="text" class="form-control" placeholder="제목">
+            <textarea id="content" name="content" class="form-control" rows="15" placeholder="내용"></textarea>
+            <input type="file" name="file" class="form-control">
+            <button type="submit" class="btn btn-primary">작성</button>
         </form>
     </div>
 </body>

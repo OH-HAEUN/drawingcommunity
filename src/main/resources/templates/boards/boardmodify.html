@@ -9,19 +9,24 @@
 
 <style>
     .layout {
-        width : 500px;
+        width : 85%;
         margin : 0 auto;
     }
 
-    .layout input {
-        width : 100%;
-        box-sizing : border-box;
+    #title {
+        margin-bottom: 20px;
     }
 
-    .layout textarea {
+    #content {
         width : 100%;
-        margin-top: 10px;
-        min-height: 300px;
+    }
+
+    .form-control {
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        margin-bottom: 10px;
     }
 </style>
 
@@ -30,9 +35,10 @@
 <body>
 <div class="layout">
     <form th:action="@{/update/{id}(id=${board.id})}" method="post">
-        <input name="title" type="text" th:value="${board.title}">
-        <textarea name="content" th:text="${board.content}"></textarea>
-        <button type="submit">수정</button>
+        <input id="title" name="title" type="text" class="form-control" th:value="${board.title}">
+        <textarea id="content" name="content" class="form-control" rows="15" th:text="${board.content}"></textarea>
+        <input type="file" name="file" class="form-control">
+        <button type="submit" class="btn btn-primary">수정</button>
     </form>
 </div>
 </body>
