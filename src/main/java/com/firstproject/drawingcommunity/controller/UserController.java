@@ -64,6 +64,16 @@ public class UserController {
         return  "/users/login";
     }
 
+    @GetMapping("/loginuser")
+    public void loginuser(Model model, Principal principal) {
+        if (principal != null) {
+            String loginuser = principal.getName();
+            User user = userService.userInfo(loginuser);
+
+            model.addAttribute( "loginuser", user.getNickname());
+        }
+    }
+
     @GetMapping("/mypage")
     public String mypage(Model model, Principal principal) {
         String userid = principal.getName();
@@ -79,5 +89,22 @@ public class UserController {
             System.out.println("user = null");
         }
         return "/users/mypage";
+    }
+}
+
+@ControllerAdvice
+class LoginUser {
+
+    @Autowired
+    private UserService userService;
+
+    @ModelAttribute
+    public void loginUser(Model model, Principal principal) {
+        if (principal != null) {
+            String loginuser = principal.getName();
+            User user = userService.userInfo( loginuser );
+
+            model.addAttribute( "loginuser", user.getNickname() );
+        }
     }
 }

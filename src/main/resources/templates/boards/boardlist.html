@@ -9,13 +9,22 @@
 
 <style>
     .layout {
-        width: 70%;
+        width: 85%;
         margin: 0 auto;
-        margin-top: 40px;
+    }
+
+    a {
+        color: black;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: lightcoral;
     }
 
 </style>
 
+<th:block th:replace="~{header :: header}"></th:block>
 <body>
 
 <div class="layout">
@@ -32,7 +41,7 @@
         <tbody>
         <tr th:each="board : ${list}">
             <td class="text-center" th:text="${board.id}">1</td>
-            <td class="text-left"><a th:text="${board.title}" th:href="@{/board/view(id=${board.id})}"></a></td>
+            <td class="text-left"><a th:text="${board.title}" th:href="@{/view(id=${board.id})}"></a></td>
             <td class="text-center" th:text="${board.writer}"></td>
             <td class="text-center" th:text="${#dates.format(board.c_date, 'yyyy-MM-dd')}"></td>
             <td class="text-center" th:text="${board.view}"></td>

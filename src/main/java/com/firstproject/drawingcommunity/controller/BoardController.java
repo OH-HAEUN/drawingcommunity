@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.security.Principal;
 
 @Controller
-@RequestMapping("/board")
+@RequestMapping("/")
 public class BoardController {
 
     @Autowired
@@ -38,8 +38,8 @@ public class BoardController {
     @PostMapping("/writepro")
     public String boardWritePro(Board board, Model model, HttpServletRequest request, MultipartFile file, Principal principal) throws Exception {
 
-        String loginuser = principal.getName();
-        User user = userService.userInfo(loginuser);
+        String writer = principal.getName();
+        User user = userService.userInfo(writer);
 
         if (request.getParameter( "title" ) == "") {
             model.addAttribute( "message", "제목이 입력되지 않아 글을 등록할 수 없습니다." );
@@ -48,7 +48,7 @@ public class BoardController {
 
         } else {
             model.addAttribute( "message", "글 작성이 완료되었습니다." );
-            model.addAttribute("searchUrl", "/board/list");
+            model.addAttribute("searchUrl", "/list");
             boardService.write(board, file, user.getNickname());
         }
 
@@ -104,6 +104,8 @@ public class BoardController {
     public String boardUpdate(@PathVariable("id") Integer id, Board board, Model model, MultipartFile file, HttpServletRequest request, Principal principal) throws Exception {
 
         String writer = principal.getName();
+        User user = userService.userInfo(writer);
+
 
         Board boardTemp = boardService.boardView(id);
         boardTemp.setTitle(board.getTitle());
@@ -116,8 +118,8 @@ public class BoardController {
 
         } else {
             model.addAttribute( "message", "글 수정이 완료되었습니다." );
-            model.addAttribute( "searchUrl", "/board/list" );
-            boardService.write( boardTemp, file, writer);
+            model.addAttribute( "searchUrl", "/list" );
+            boardService.write( boardTemp, file, user.getNickname());
         }
 
         return "/message";

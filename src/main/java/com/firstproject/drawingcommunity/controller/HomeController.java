@@ -10,30 +10,20 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
 @Controller
+//@ControllerAdvice
 public class HomeController {
 
     @Autowired
     private HomeService homeService;
-    @Autowired
-    private UserService userService;
 
     @RequestMapping("/")
-    public String home(Model model, @PageableDefault(page = 0, size = 15, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-                       Principal principal) {
-
-        model.addAttribute("list", homeService.homeFreeBoard(pageable));
-
-        if (principal != null) {
-            String loginuser = principal.getName();
-            User user = userService.userInfo(loginuser);
-
-            model.addAttribute( "loginuser", user.getNickname());
-        };
+    public String home(Model model, @PageableDefault(page = 0, size = 15, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+        model.addAttribute( "list", homeService.homeFreeBoard( pageable ) );
 
         return "home";
     }
