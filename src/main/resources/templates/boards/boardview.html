@@ -28,6 +28,15 @@
 
 </style>
 
+<script th:inline="javascript">
+    function del() {
+        if(confirm("삭제하시겠습니까?")) {
+            location.href = "/delete?id=[[${board.id}]]";
+        }
+    }
+
+</script>
+
 <th:block th:replace="~{header :: header}"></th:block>
 
 <body>
@@ -38,7 +47,7 @@
     <a th:href="@{${board.filepath}}">다운받기</a>
     <div class="button">
     <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/modify/{id}(id=${board.id})}'|">수정</button>
-    <button type="button" class="btn btn-danger" th:onclick="|location.href='@{/delete(id=${board.id})}'|">삭제</button>
+    <button type="button" class="btn btn-danger" onclick="del()">삭제</button>
     </div>
 </div>
 
