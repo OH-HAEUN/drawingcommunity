@@ -45,9 +45,10 @@
     <h2 th:text="${board.title}">제목입니다.</h2>
     <p th:text="${board.content}">내용이 들어갈 부분입니다.</p>
     <a th:href="@{${board.filepath}}">다운받기</a>
-    <div class="button">
-    <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/modify/{id}(id=${board.id})}'|">수정</button>
-    <button type="button" class="btn btn-danger" onclick="del()">삭제</button>
+<!--    <div class="button">-->
+    <div th:if="${principal == board.writer_id}" class="button">
+        <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/modify/{id}(id=${board.id})}'|">수정</button>
+        <button type="button" class="btn btn-danger" onclick="del()">삭제</button>
     </div>
 </div>
 

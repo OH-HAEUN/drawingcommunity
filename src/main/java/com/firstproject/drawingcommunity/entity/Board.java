@@ -28,6 +28,8 @@ public class Board {
 
     private String writer;
 
+    private String writer_id;
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date c_date;

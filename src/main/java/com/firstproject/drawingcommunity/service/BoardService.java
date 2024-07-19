@@ -20,10 +20,9 @@ public class BoardService {
     private BoardRepository boardRepository;
 
     // 게시글 작성 처리
-    public void write(Board board, MultipartFile file, String writer) throws Exception {
+    public void write(Board board, MultipartFile file, String writer, String writerid) throws Exception {
 
         String projectPath = System.getProperty( "user.dir" ) + "\\src\\main\\resources\\static\\files";
-
         UUID uuid = UUID.randomUUID();
 
         if (file != null) {
@@ -38,7 +37,9 @@ public class BoardService {
                 board.setFilepath( "/files/" + fileName );
             }
         }
+        System.out.println(writerid);
         board.setWriter( writer );
+        board.setWriter_id( writerid );
 
         boardRepository.save( board );
     }

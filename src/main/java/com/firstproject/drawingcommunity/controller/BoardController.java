@@ -41,6 +41,9 @@ public class BoardController {
         String writer = principal.getName();
         User user = userService.userInfo(writer);
 
+        System.out.println(principal);
+        System.out.println(user);
+
         if (request.getParameter( "title" ) == "") {
             model.addAttribute( "message", "제목이 입력되지 않아 글을 등록할 수 없습니다." );
         } else if (request.getParameter( "content" ) == "") {
@@ -49,7 +52,7 @@ public class BoardController {
         } else {
             model.addAttribute( "message", "글 작성이 완료되었습니다." );
             model.addAttribute("searchUrl", "/list");
-            boardService.write(board, file, user.getNickname());
+            boardService.write(board, file, user.getNickname(), user.getUsername());
         }
 
         return "/message";
@@ -81,7 +84,10 @@ public class BoardController {
     }
 
     @GetMapping("/view")    // localhost:8080/board/view?id=1
-    public String boardView(Model model, Integer id) {
+    public String boardView(Model model, Integer id, Principal principal) {
+        if (principal != null) {
+            model.addAttribute( "principal", principal.getName() );
+        }
         boardService.updateView(id);
         model.addAttribute("board", boardService.boardView(id));
         return "/boards/boardview";
@@ -108,7 +114,6 @@ public class BoardController {
         String writer = principal.getName();
         User user = userService.userInfo(writer);
 
-
         Board boardTemp = boardService.boardView(id);
         boardTemp.setTitle(board.getTitle());
         boardTemp.setContent(board.getContent());
@@ -121,7 +126,7 @@ public class BoardController {
         } else {
             model.addAttribute( "message", "글 수정이 완료되었습니다." );
             model.addAttribute( "searchUrl", "/list" );
-            boardService.write( boardTemp, file, user.getNickname());
+            boardService.write( boardTemp, file, user.getNickname(), user.getUsername());
         }
 
         return "/message";

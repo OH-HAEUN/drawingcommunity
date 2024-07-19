@@ -32,9 +32,9 @@
             document.getElementById('usernamecheck').disabled = false;
         }),
 
-        $('#nickname').on("propertychange change keyup paste input", function () {
-            document.getElementById('nicknamecheck').disabled = false;
-        })
+            $('#nickname').on("propertychange change keyup paste input", function () {
+                document.getElementById('nicknamecheck').disabled = false;
+            })
     })
 
     function usernameCheck() {
@@ -70,22 +70,27 @@
     function nicknameCheck() {
         var nickname = document.getElementById('nickname').value;
 
-        $.ajax({
-            url: './nicknamecheck',
-            type: 'GET',
-            contentType: 'application/json',
-            data: {nickname: nickname},
-            headers: {
-                "X-CSRF-TOKEN": $("meta[name='_csrf']").attr("content")
-            },
-            success: function () {
-                alert("사용 가능한 닉네임 입니다.")
-                document.getElementById('nicknamecheck').disabled = true;
-            },
-            error: function () {
-                alert("이미 사용중인 닉네임 입니다.")
-            }
-        })
+        if (nickname == "") {
+            alert("닉네임을 입력하세요.")
+            return;
+        } else {
+            $.ajax({
+                url: './nicknamecheck',
+                type: 'GET',
+                contentType: 'application/json',
+                data: {nickname: nickname},
+                headers: {
+                    "X-CSRF-TOKEN": $("meta[name='_csrf']").attr("content")
+                },
+                success: function () {
+                    alert("사용 가능한 닉네임 입니다.")
+                    document.getElementById('nicknamecheck').disabled = true;
+                },
+                error: function () {
+                    alert("이미 사용중인 닉네임 입니다.")
+                }
+            })
+        }
     }
 
     function signupSubmit() {
@@ -100,9 +105,9 @@
         console.log(usernamecheck)
         console.log(nicknamecheck)
 
-        if(username == "") {
+        if (username == "") {
             alert("아이디를 입력하세요.")
-        } else if(nickname == "") {
+        } else if (nickname == "") {
             alert("닉네임을 입력하세요.")
             return;
         } else if (password == "") {
@@ -111,10 +116,10 @@
         } else if (email == "") {
             alert("이메일을 입력하세요.")
             return;
-        } else if(usernamecheck == false) {
+        } else if (usernamecheck == false) {
             alert("아이디 입력 후 중복확인 버튼을 클릭하세요.")
             return;
-        } else if(nicknamecheck == false) {
+        } else if (nicknamecheck == false) {
             alert("닉네임 입력 후 중복확인 버튼을 클릭하세요.")
             return;
         } else {
