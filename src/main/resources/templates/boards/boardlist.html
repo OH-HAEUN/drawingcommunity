@@ -60,14 +60,14 @@
         <li class="page-item"><a class="page-link" href="#">prev</a></li>
         <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
             <li class="page-item"><a class="page-link" th:if="${page != nowPage}"
-                                     th:href="@{/board/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword})}"
+                                     th:href="@{/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword})}"
                                      th:text="${page}"></a></li>
             <li class="page-item"><strong class="page-link" th:if="${page == nowPage}" th:text="${page}"></strong></li>
         </th:block>
         <li class="page-item"><a class="page-link" href="#">next</a></li>
     </ul>
     <div class="row justify-content-center align-items-center">
-        <form th:action="@{/board/list}" method="get" class="col-sm-3">
+        <form th:action="@{/list}" method="get" class="col-sm-3">
             <div class="input-group mb-1">
                 <input type="text" name="searchKeyword" class="form-control" aria-describedby="button-addon">
                 <button type="submit" id="button-addon" class="btn btn-outline-primary">검색</button>
